@@ -1,4 +1,4 @@
-module tonwatcher
+module github.com/irvin518/tonwatcher
 
 go 1.20
 
