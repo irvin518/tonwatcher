@@ -17,7 +17,7 @@ type TonWatcher struct {
 	WatcherTableModle AddressCache
 }
 
-type AddressCallback func(*tlb.Transaction)
+type AddressCallback func(*tlb.Transaction, string)
 
 func NewTonWatcher(ctx context.Context, api ton.APIClientWrapped, addressCache AddressCache) *TonWatcher {
 	log.Printf("mastert proof checks since config init  block, it mai yake near a minute...")
@@ -95,7 +95,7 @@ func (l *TonWatcher) subscribe(treasuryAddress *address.Address, cb func(*tlb.Tr
 	return nil
 }
 
-func (l *TonWatcher) WatchAddress(addr string, callback AddressCallback, ctx context.Context) error {
+func (l *TonWatcher) WatchAddress(addr string, callback AddressCallback, callbackUrl string, ctx context.Context) error {
 	treasuryAddress, err := address.ParseAddr(addr)
 	if err != nil {
 		return err
@@ -103,7 +103,7 @@ func (l *TonWatcher) WatchAddress(addr string, callback AddressCallback, ctx con
 	err = l.subscribe(treasuryAddress, func(tx *tlb.Transaction) error {
 		// process transaction here
 		if tx.IO.In != nil {
-			callback(tx)
+			callback(tx, callbackUrl)
 		}
 
 		return nil
