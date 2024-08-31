@@ -2,7 +2,6 @@ package tonwatcher
 
 import (
 	"context"
-	"fmt"
 	"log"
 
 	"github.com/xssnick/tonutils-go/address"
@@ -49,10 +48,10 @@ func (l *TonWatcher) subscribe(treasuryAddress *address.Address, cb func(*tlb.Tr
 		if err != nil {
 			return err
 		}
-		if !acc.IsActive {
-			log.Printf("%s is not active", treasuryAddress.String())
-			return fmt.Errorf("%s is not active", treasuryAddress.String())
-		}
+		// if !acc.IsActive {
+		// 	log.Printf("%s is not active", treasuryAddress.String())
+		// 	return fmt.Errorf("%s is not active", treasuryAddress.String())
+		// }
 
 		// Cursor of processed transaction, save it to your db
 		// We start from last transaction, will not process transactions older than we started from.
